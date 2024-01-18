@@ -1,0 +1,80 @@
+﻿@model Recyclable.Models.RecyclableItemViewModel
+
+@{
+    ViewBag.Title = "Add Recyclable Item";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Add", "RecyclableItem", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SelectedRecyclableType)
+                    @Html.DropDownListFor(model => model.SelectedRecyclableType,
+                        Model.RecyclableTypes,
+                        "Select Recyclable Type",
+                new { @class = "form-control", id = "SelectedRecyclableType", onchange = "updateComputedRate()" ,Required = "required" })
+                </div>
+
+                @Html.HiddenFor(model => model.SelectedRecyclableTypeText, new { id = "SelectedRecyclableTypeText" })
+            
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RecyclableItem.ItemDescription, "Description")
+                    @Html.TextBoxFor(model => model.RecyclableItem.ItemDescription, new { @class = "form-control" })
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RecyclableItem.Weight)
+                    @Html.TextBoxFor(model => model.RecyclableItem.Weight, new { @class = "form-control" , onchange = "updateComputedRate()"})
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.RecyclableItem.ComputedRate)
+                    @Html.TextBoxFor(model => model.RecyclableItem.ComputedRate, new { @class = "form-control", id = "RecyclableItem_ComputedRate"  , @readonly = "readonly"} )
+                </div>
+
+               
+
+                <div class="form-group">
+                    <input id="btnSubmit" type="submit" value="Save" class="btn btn-primary" />
+                    <input type="reset" value="Reset" class="btn btn-secondary" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    
+        }
+<script>
+    
+
+
+    function updateComputedRate() {
+        var dropdownElement = document.getElementById("SelectedRecyclableType");
+        var selectedText = dropdownElement.options[dropdownElement.selectedIndex].text;
+
+
+        document.getElementById("SelectedRecyclableTypeText").value = selectedText;
+
+        var selectedRate = parseFloat(dropdownElement.options[dropdownElement.selectedIndex].value);
+        var weight = parseFloat(document.getElementById("RecyclableItem_Weight").value);
+
+        
+
+        if (!isNaN(selectedRate) && !isNaN(weight)) {
+            var computedRate = selectedRate * weight;
+
+            console.log(selectedRate < computedRate);
+
+            document.getElementById("RecyclableItem_ComputedRate").value = computedRate.toFixed(2);
+        }
+    }
+
+</script>

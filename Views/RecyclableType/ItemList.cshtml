@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Recyclable.Models.RecyclableItemListViewModel>
+
+@{
+    ViewData["Title"] = "Recyclable Types Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Recyclable Types</h1>
+   
+    <a href="@Url.Action("List", "RecyclableType")" class="btn btn-secondary">Go to Recyclable Types</a>
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    
+                    <th>Type</th>
+                    <th>Rate</th>
+                    <th>MinKg</th>
+                    <th>MaxKg</th>
+     
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var recyclableType in Model)
+                {
+                    <tr>
+                
+                        <td>@recyclableType.Type</td>
+                        <td>@recyclableType.ItemDescription</td>
+                        <td>@recyclableType.Weight</td>
+                        <td>@recyclableType.ComputedRate</td>
+ 
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No data available.</p>
+    }
+</div>

@@ -1,0 +1,50 @@
+﻿@model Recyclable.Models.RecyclableType
+
+@{
+    ViewBag.Title = "Delete Recyclable Type";
+}
+
+<h2>Delete Recyclable Type</h2>
+
+<p>Are you sure you want to delete the following recyclable type?</p>
+
+<div>
+    <h4>Recyclable Type</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Rate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Rate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MinKg)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MinKg)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MaxKg)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.MaxKg)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm("DeleteConfirmation", "RecyclableType", new { id = Model.Id }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a href="@Url.Action("List", "RecyclableType")" class="btn btn-secondary">Back to Recyclable Type</a>
+    }
+</div>

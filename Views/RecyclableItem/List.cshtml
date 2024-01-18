@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Recyclable.Models.RecyclableItem>
+
+@{
+    ViewData["Title"] = "Recyclable Items Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Recyclable Items</h1>  
+    <a href="@Url.Action("Add", "RecyclableItem")" class="btn btn-primary">Add Recycle Item</a>
+    <a href="@Url.Action("List", "RecyclableType")" class="btn btn-secondary">Go to Recyclable Type</a>
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Type</th>
+                    <th>Weight</th>
+                    <th>Computed Rate</th>
+                    <th>Item Description</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var recyclableItem in Model)
+                {
+                    <tr>
+                        <td>@recyclableItem.Id</td>
+                        <td>@recyclableItem.TypeId</td>
+                        <td>@recyclableItem.Weight</td>
+                        <td>@recyclableItem.ComputedRate</td>
+                        <td>@recyclableItem.ItemDescription</td>
+                        <td>
+                            <a href="@Url.Action("Edit", "RecyclableItem", new { id = recyclableItem.Id })" class="btn btn-primary">Edit</a>
+                        
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Delete", "RecyclableItem", new { id = recyclableItem.Id })" class="btn btn-danger">Delete</a>
+                        </td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No data available.</p>
+    }
+</div>

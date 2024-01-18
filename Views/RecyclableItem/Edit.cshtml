@@ -1,0 +1,74 @@
+﻿@model Recyclable.Models.RecyclableItemViewModel
+
+@{
+    ViewBag.Title = "Edit Recyclable Item";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Edit", "RecyclableItem", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+                    @Html.LabelFor(model => model.SelectedRecyclableType)
+                    @Html.DropDownListFor(model => model.SelectedRecyclableType,
+                        Model.RecyclableTypes,
+                        "Select Recyclable Type",
+                        new { @class = "form-control", id = "SelectedRecyclableType", onchange = "updateComputedRate()" })
+                </div>
+    @Html.HiddenFor(model => model.SelectedRecyclableTypeText, new { id = "SelectedRecyclableTypeText" })
+    @Html.HiddenFor(model => model.SelectedRecyclableTypeId, new { id = "SelectedRecyclableTypeId" })
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RecyclableItem.ItemDescription)
+        @Html.TextBoxFor(model => model.RecyclableItem.ItemDescription, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RecyclableItem.Weight)
+        @Html.TextBoxFor(model => model.RecyclableItem.Weight, new { @class = "form-control", onchange = "updateComputedRate()" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RecyclableItem.ComputedRate)
+        @Html.TextBoxFor(model => model.RecyclableItem.ComputedRate, new { @class = "form-control", id = "RecyclableItem_ComputedRate" , @readonly = "readonly"})
+    </div>
+
+ 
+
+<div class="form-group">
+    <input type="submit" value="Update" class="btn btn-primary" />
+        <a href="@Url.Action("List", "RecyclableItem")" class="btn btn-secondary">Back to Recyclable Item</a>
+</div>
+        }
+
+@section Scripts {
+    <script>
+        function updateComputedRate() {
+
+            var dropdownElement = document.getElementById("SelectedRecyclableType");
+            var selectedText = dropdownElement.options[dropdownElement.selectedIndex].text;
+
+            // Set the selected text in the hidden field
+            document.getElementById("SelectedRecyclableTypeText").value = selectedText;
+
+            var selectedRate = parseFloat(document.getElementById("SelectedRecyclableType").value);
+            var weight = parseFloat(document.getElementById("RecyclableItem_Weight").value);
+  
+
+            // Check for NaN (Not a Number) before performing arithmetic operations
+            if (!isNaN(selectedRate) && !isNaN(weight)) {
+                // Update ComputedRate based on the selected rate and weight
+                var computedRate = selectedRate * weight;
+
+                // Set the computed rate in the ComputedRate textbox
+                document.getElementById("RecyclableItem_ComputedRate").value = computedRate.toFixed(2);
+            }
+        }
+    </script>
+
+    @{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+}

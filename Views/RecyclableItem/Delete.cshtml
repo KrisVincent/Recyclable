@@ -1,0 +1,50 @@
+﻿@model Recyclable.Models.RecyclableItem
+
+@{
+    ViewBag.Title = "Delete Recyclable Item";
+}
+
+<h2>Delete Recyclable Item</h2>
+
+<p>Are you sure you want to delete the following recyclable item?</p>
+
+<div>
+    <h4>Recyclable Item</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TypeId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TypeId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ComputedRate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ComputedRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ItemDescription)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ItemDescription)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm("DeleteConfirmation", "RecyclableItem", new { id = Model.Id }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a href="@Url.Action("List", "RecyclableItem")" class="btn btn-secondary">Back to Recyclable Item</a>
+    }
+</div>
